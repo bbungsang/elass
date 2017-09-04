@@ -54,3 +54,10 @@ config_secret_common = json.loads(open(CONFIG_SECRET_COMMON_FILE).read())
 # Secret Key
 SECRET_KEY = config_secret_common['django']['secret_key']
 ```
+
+## runserver
+
+```
+# local development
+>>> python3 manage.py reunserver --settings=config.settings.debug
+```
