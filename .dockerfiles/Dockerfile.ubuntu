@@ -27,7 +27,6 @@ RUN             pyenv install 3.6.1
 # zsh
 ##
 RUN             apt-get -y install zsh
-# oh my zsh 설치
 RUN             wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
 RUN             chsh -s /usr/bin/zsh
 
@@ -55,6 +54,7 @@ RUN             /root/.pyenv/versions/elass/bin/pip install uwsgi
 ##
 # Nginx install
 ##
+RUN             apt-get -y update
 RUN             apt-get -y install nginx
 
 RUN             apt-get -y install supervisor
