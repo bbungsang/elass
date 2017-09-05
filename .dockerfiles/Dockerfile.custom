@@ -14,7 +14,7 @@ COPY            . /srv/elass
 WORKDIR         /srv/elass
 
 # requirements 설치
-RUN             /root/.pyenv/versions/elass/bin/pip install -r .requirements/debug.txt
+RUN             /root/.pyenv/versions/elass/bin/pip install -r .requirements/deploy.txt
 
 # supervisor 파일 복사
 COPY            .config/supervisor/uwsgi.conf /etc/supervisor/conf.d/
@@ -30,7 +30,7 @@ RUN             ln -sf /etc/nginx/sites-available/nginx-app.conf /etc/nginx/site
 
 #RUN             /root/.pyenv/versions/elass/bin/python /srv/elass/django_app/manage.py collectstatic --settings=config.settings.debug --noinput
 
-#CMD             supervisord -n
+CMD             supervisord -n
 
 # 컨테이너 내부 어느 포트와 연결시킬 것인지에 대한 커맨드 : nginx 가 80 포트 요청을 받기 때문에 80 으로 지정
-#EXPOSE          80
+EXPOSE          80
