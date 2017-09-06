@@ -10,6 +10,10 @@ WSGI_APPLICATION = 'config.wsgi.deploy.application'
 # Storage settings
 
 # Static URLs
+STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+
+STATIC_ROOT = os.path.join(ROOT_DIR, '.static_root')
 
 # 배포모드이므로 DEBUG는 False
 DEBUG = True

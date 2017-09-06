@@ -13,9 +13,22 @@ import json
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# django_app/templates
+TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
+# django_app/static
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
-ROOT_DIR = os.path.join(BASE_DIR)
+STATICFILES_DIRS = [
+    STATIC_DIR,
+]
+STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+
+# django_app/media
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+ROOT_DIR = os.path.join(os.path.dirname(BASE_DIR))
 
 # Config Secret Files
 CONFIG_SECRET_DIR = os.path.join(ROOT_DIR, '.config_secret')
@@ -28,6 +41,7 @@ config_secret_common = json.loads(open(CONFIG_SECRET_COMMON_FILE).read())
 # Secret Key
 SECRET_KEY = config_secret_common['django']['secret_key']
 
+AUTH_USER_MODEL = 'member.MyUser'
 
 # Application definition
 INSTALLED_APPS = [
@@ -37,6 +51,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'member',
+    # 'regiclass',
 ]
 
 
@@ -108,8 +125,3 @@ LANGUAGE_CODE = 'ko-kr'
 
 TIME_ZONE = 'Asia/Seoul'
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.11/howto/static-files/
-
-STATIC_URL = '/static/'

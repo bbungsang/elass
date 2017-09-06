@@ -28,7 +28,8 @@ RUN             rm -rf /etc/nginx/sites-enabled/default
 # symbolic link 생성
 RUN             ln -sf /etc/nginx/sites-available/nginx-app.conf /etc/nginx/sites-enabled/nginx-app.ini
 
-#RUN             /root/.pyenv/versions/elass/bin/python /srv/elass/django_app/manage.py collectstatic --settings=config.settings.debug --noinput
+# collectstatic 실행
+RUN             /root/.pyenv/versions/elass/bin/python /srv/elass/django_app/manage.py collectstatic --settings=config.settings.deploy --noinput
 
 CMD             supervisord -n
 
