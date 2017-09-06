@@ -1,10 +1,4 @@
-##
-# Dockerfile.ubuntu 를 활용한 custom docker file
-#   Dockerfile.ubuntu : 변하지 않을 과정으로 확정된 부분을 미리 생성한 것
-#   Dockerfile.custom : 반복적으로 추가/변경/삭제 할 부분
-##
-
-FROM            elass_ubuntu
+FROM            bbungsang/elass_ubuntu
 MAINTAINER      bbungsang@gmail.com
 
 # 현재 경로의 모든 파일을 컨테이너의 /srv/elass 폴더에 복사
@@ -14,7 +8,7 @@ COPY            . /srv/elass
 WORKDIR         /srv/elass
 
 # requirements 설치
-RUN             /root/.pyenv/versions/elass/bin/pip install -r .requirements/debug.txt
+RUN             /root/.pyenv/versions/elass/bin/pip install -r .requirements/deploy.txt
 
 # supervisor 파일 복사
 COPY            .config/supervisor/uwsgi.conf /etc/supervisor/conf.d/
@@ -28,7 +22,8 @@ RUN             rm -rf /etc/nginx/sites-enabled/default
 # symbolic link 생성
 RUN             ln -sf /etc/nginx/sites-available/nginx-app.conf /etc/nginx/sites-enabled/nginx-app.ini
 
-#RUN             /root/.pyenv/versions/elass/bin/python /srv/elass/django_app/manage.py collectstatic --settings=config.settings.debug --noinput
+# collectstatic 실행
+RUN             /root/.pyenv/versions/elass/bin/python /srv/elass/django_app/manage.py collectstatic --settings=config.settings.deploy --noinput
 
 CMD             supervisord -n
 
