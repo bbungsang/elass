@@ -1,4 +1,4 @@
-FROM            bbungsang/elass_ubuntu
+FROM            bbungsang/elass
 MAINTAINER      bbungsang@gmail.com
 
 # 현재 경로의 모든 파일을 컨테이너의 /srv/elass 폴더에 복사
