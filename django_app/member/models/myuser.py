@@ -8,6 +8,7 @@ from django.db import models
 from utils.fields.custom_image_fields import CustomImageField
 
 __all__ = (
+    # 'MyUserManager',
     'MyUser',
 )
 
