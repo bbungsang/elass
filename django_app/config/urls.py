@@ -14,12 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf import settings
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^member/', include('member.urls')),
 ]
 # /static/, /media/에 대한 요청을 STATIC_ROOT, MEDIA_ROOT 경로의 파일에서 찾는다.
 # /xx/ URL 에 대해서 XX_ROOT 경로에서 파일을 찾아서 해당 파일 자체를 리턴

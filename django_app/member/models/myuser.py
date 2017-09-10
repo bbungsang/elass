@@ -2,9 +2,7 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser, UserManager as DefaultUserManager
 from django.db import models
 
-# from utils import CustomImageField
-#
-# from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.models import Token
 from utils.fields.custom_image_fields import CustomImageField
 
 __all__ = (
@@ -84,5 +82,5 @@ class MyUser(AbstractUser):
         self.phone = kwargs.get('phone', self.phone)
         self.save()
 
-    # def get_user_token(self, user_pk):
-    #     return Token.objects.get_or_create(user_id=user_pk)
+    def get_user_token(self, user_pk):
+        return Token.objects.get_or_create(user_id=user_pk)
