@@ -1,7 +1,9 @@
+from rest_framework.authtoken.models import Token
+from rest_framework.exceptions import APIException
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from member.serializers.myuser import LoginSerializer
+from member.serializers import MyUserSerializer, LoginSerializer
 
 
 class LoginView(APIView):

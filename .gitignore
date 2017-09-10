@@ -188,6 +188,7 @@ ENV/
 # Custom
 .idea/*
 .static_root/
+.media/
 
 # secret files
 .config_secret/

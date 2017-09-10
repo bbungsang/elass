@@ -7,6 +7,51 @@ from member.models import Tutor, get_user_model
 MyUser = get_user_model()
 
 
+class MyUserSerializer(serializers.ModelSerializer):
+    """ 회원가입, 마이페이지 조회/수정/삭제 """
+
+    password = serializers.CharField(label='Password', write_only=True)
+    confirm_password = serializers.CharField(label='Confirm Password', write_only=True)
+
+    class Meta:
+        model = MyUser
+        fields = (
+            'username',
+            'password',
+            'confirm_password',
+            'name',
+            'nickname',
+            'email',
+            'phone',
+            'my_photo',
+        )
+
+    def create(self, validated_data):
+        return MyUser.objects.create_user(**validated_data)
+
+    def update(self, instance, validated_data):
+        # 모델 시리얼라이즈이므로 불필요한 사항?
+        instance.name = validated_data.get('name', instance.name)
+        instance.nickname = validated_data.get('nickname', instance.nickname)
+        instance.email = validated_data.get('email', instance.email)
+        instance.phone = validated_data.get('phone', instance.phone)
+        instance.my_photo = validated_data.get('my_photo', instance.my_photo)
+
+        # password = validated_data.get('password', None)
+        # instance.set_password(password)
+
+        instance.save()
+        return instance
+
+    def validate(self, data):
+        if data['password'] and data['password'] != data['confirm_password']:
+            raise serializers.ValidationError('비밀번호가 서로 일치하지 않습니다.')
+
+        # 데이터베이스에 있는 필드가 아니므로 제외
+        data.pop('confirm_password')
+        return data
+
+
 class LoginSerializer(serializers.Serializer):
     """ 로그인 """
     username = serializers.CharField(max_length=36, write_only=True)
