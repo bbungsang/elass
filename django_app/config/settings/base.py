@@ -42,6 +42,12 @@ config_secret_common = json.loads(open(CONFIG_SECRET_COMMON_FILE).read())
 # Secret Key
 SECRET_KEY = config_secret_common['django']['secret_key']
 
+FACEBOOK_APP_ID = '352609101838188'
+API_SECRET_KEYS = os.path.join(CONFIG_SECRET_DIR, 'api_secret_key.json')
+api_secret_keys = json.loads(open(API_SECRET_KEYS).read())
+
+FACEBOOK_SECRET_CODE = api_secret_keys['facebook']['secret_key']
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -63,9 +69,9 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
     ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
+    # 'DEFAULT_PERMISSION_CLASSES': (
+    #     'rest_framework.permissions.IsAuthenticated',
+    # ),
 }
 
 MIDDLEWARE = [

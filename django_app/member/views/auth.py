@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.http import HttpResponse
 from rest_framework.authtoken.models import Token
 from rest_framework.exceptions import APIException
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -111,7 +112,7 @@ class FaceBookLoginView(APIView):
 class MyProfileView(APIView):
     """ 마이페이지 조회/수정/삭제 """
 
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, )
 
     # API 뷰에 적합한 접근 제한 방식이 아니다.
     # def get(self, request, user_pk):
@@ -157,15 +158,16 @@ class MyProfileView(APIView):
         # def dispatch(self, request, *args, **kwargs):
         #     return super(ChangeMyProfileView, self).dispatch(*args, **kwargs)
 
-    class ChangePasswordView(APIView):
-        def patch(self, request, user_pk):
-            user = MyUser.objects.get(pk=user_pk)
 
-            # `partial=True`를 지정함으로써 필요없는 작업이 된다.
-            # data = request.data.copy()
-            # data['username'] = user.username
-            serializer = ChangePasswordSerializer(user, data=request.data, partial=True)
-            if serializer.is_valid(raise_exception=True):
-                serializer.save()
-            return Response(serializer.data)
+class ChangePasswordView(APIView):
+    def patch(self, request, user_pk):
+        user = MyUser.objects.get(pk=user_pk)
+
+        # `partial=True`를 지정함으로써 필요없는 작업이 된다.
+        # data = request.data.copy()
+        # data['username'] = user.username
+        serializer = ChangePasswordSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+        return Response(serializer.data)
 
