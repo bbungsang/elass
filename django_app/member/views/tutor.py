@@ -18,6 +18,8 @@ __all__ = (
 class TutorRegisterView(APIView):
     """ 튜터 등록 """
 
+    permissions_classes = (IsAuthenticated,)
+
     def post(self, request):
         serializer = TutorRegisterSerializer(data=request.data)
         print(request.auth)

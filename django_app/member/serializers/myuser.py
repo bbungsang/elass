@@ -1,10 +1,17 @@
 from django.contrib.auth import authenticate
 
 from rest_framework import serializers
+from rest_framework.authtoken.models import Token
 
 from member.models import Tutor, get_user_model
 
 MyUser = get_user_model()
+
+__all__ = (
+    'MyUserSerializer',
+    'LoginSerializer',
+    'ChangePasswordSerializer',
+)
 
 
 class MyUserSerializer(serializers.ModelSerializer):
@@ -36,9 +43,6 @@ class MyUserSerializer(serializers.ModelSerializer):
         instance.email = validated_data.get('email', instance.email)
         instance.phone = validated_data.get('phone', instance.phone)
         instance.my_photo = validated_data.get('my_photo', instance.my_photo)
-
-        # password = validated_data.get('password', None)
-        # instance.set_password(password)
 
         instance.save()
         return instance
@@ -88,3 +92,56 @@ class LoginSerializer(serializers.Serializer):
             }
         }
         return ret
+
+
+class ChangePasswordSerializer(serializers.ModelSerializer):
+    """ 비밀번호 변경 """
+    old_password = serializers.CharField(max_length=64, write_only=True)
+    new_password1 = serializers.CharField(max_length=64, write_only=True)
+    new_password2 = serializers.CharField(max_length=64, write_only=True)
+
+    class Meta:
+        model = MyUser
+        fields = (
+            'username',
+            'name',
+            'nickname',
+            'email',
+            'phone',
+            'my_photo',
+
+            'old_password',
+            'new_password1',
+            'new_password2',
+        )
+
+    def update(self, instance, validated_data):
+        old_password = validated_data.get('old_password', None)
+        new_password = validated_data.get('new_password1', None)
+
+        if not instance.check_password(old_password):
+            raise serializers.ValidationError(
+                '기존 비밀번호가 서로 일치하지 않습니다.'
+            )
+
+        instance.set_password(new_password)
+        instance.save()
+
+        return instance
+
+    def validate(self, data):
+        if data['new_password1'] != data['new_password2']:
+            raise serializers.ValidationError(
+                '새 비밀번호가 서로 일치하지 않습니다.'
+            )
+        data.pop('new_password2')
+        return data
+
+
+class MyUserToken(serializers.ModelSerializer):
+    """ 토큰 발급 """
+    class Meta:
+        model = Token
+        fields = (
+            'key',
+        )
