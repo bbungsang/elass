@@ -1,6 +1,8 @@
 FROM            bbungsang/elass
 MAINTAINER      bbungsang@gmail.com
 
+ENV             LANG C.UTF-8
+
 # 현재 경로의 모든 파일을 컨테이너의 /srv/elass 폴더에 복사
 COPY            . /srv/elass
 
