@@ -42,7 +42,7 @@ config_secret_common = json.loads(open(CONFIG_SECRET_COMMON_FILE).read())
 # Secret Key
 SECRET_KEY = config_secret_common['django']['secret_key']
 
-FACEBOOK_APP_ID = '352609101838188'
+FACEBOOK_APP_ID = '172356469997592'
 API_SECRET_KEYS = os.path.join(CONFIG_SECRET_DIR, 'api_secret_key.json')
 api_secret_keys = json.loads(open(API_SECRET_KEYS).read())
 
@@ -57,7 +57,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'rest_framework',
     'rest_framework.authtoken',
+    'corsheaders',
 
     'member',
     'regiclass',
@@ -77,12 +79,44 @@ REST_FRAMEWORK = {
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ORIGIN_WHITELIST = (
+    'localhost:3001'
+)
+
+# 허용되는 메소드
+CORS_ALLOW_METHODS = (
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+)
+
+# 허용되는 헤더들 -> http문제도 여기서 해결은 가능
+CORS_ALLOW_HEADERS = (
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+)
 
 ROOT_URLCONF = 'config.urls'
 
@@ -101,8 +135,6 @@ TEMPLATES = [
         },
     },
 ]
-
-WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # Database
@@ -142,3 +174,4 @@ LANGUAGE_CODE = 'ko-kr'
 
 TIME_ZONE = 'Asia/Seoul'
 
+ALLOW_UNICODE_SLUGS = True
