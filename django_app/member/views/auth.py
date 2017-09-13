@@ -110,7 +110,6 @@ class FaceBookLoginView(APIView):
         return result
 
 
-
 class MyProfileView(APIView):
     """ 마이페이지 조회/수정/삭제 """
 

@@ -16,7 +16,7 @@ MyUser = get_user_model()
 
 __all__ = (
     'LectureMake',
-    'LcetureUpdate',
+    'LectureUpdate',
     'LectureList',
     'LectureDetail',
     'LikeLecture',
@@ -45,7 +45,7 @@ class LectureMake(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class LcetureUpdate(APIView):
+class LectureUpdate(APIView):
     serializer_class = LectureUpdateSerializer
 
     def post(self, request):

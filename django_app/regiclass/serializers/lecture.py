@@ -5,14 +5,14 @@ from regiclass.models import Lecture, ClassLocation, LecturePhoto, Curriculum
 from regiclass.serializers import ReviewSerializer
 from utils.custom_exceptions import CustomIndexError, custom_index_error
 
-__all__ = (
-    'ClassLocationSerializer',
-    'LecturePhotoSerializer',
-    'CurriculumSerializer',
-    'LectureListSerializer',
-    'LectureMakeSerializer',
-    'LectureUpdateSerializer',
-)
+# __all__ = (
+#     'ClassLocationSerializer',
+#     'LecturePhotoSerializer',
+#     'CurriculumSerializer',
+#     'LectureListSerializer',
+#     'LectureMakeSerializer',
+#     'LectureUpdateSerializer',
+# )
 
 
 class ClassLocationSerializer(serializers.ModelSerializer):

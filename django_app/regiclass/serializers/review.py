@@ -3,9 +3,9 @@ from rest_framework import serializers
 from member.serializers import MyUserInfoSerializer
 from regiclass.models import Review
 
-__all__ = (
-    'ReviewSerializer',
-)
+# __all__ = (
+#     'ReviewSerializer',
+# )
 
 
 class ReviewSerializer(serializers.ModelSerializer):

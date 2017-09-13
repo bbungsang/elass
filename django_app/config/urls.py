@@ -21,8 +21,14 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^member/', include('member.urls')),
+    url(r'^regiclass/', include('regiclass.urls')),
 ]
 # /static/, /media/에 대한 요청을 STATIC_ROOT, MEDIA_ROOT 경로의 파일에서 찾는다.
 # /xx/ URL 에 대해서 XX_ROOT 경로에서 파일을 찾아서 해당 파일 자체를 리턴
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# API 로그인과 로그아웃 뷰에 사용되는 url 패턴
+urlpatterns += [
+    url(r'api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+]
