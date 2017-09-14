@@ -52,7 +52,7 @@ class FaceBookLoginView(APIView):
     """ 페이스북 로그인 """
 
     def post(self, request):
-        token = request.POST.get('token')
+        token = request.data.get('token')
 
         if not token:
             raise APIException('Token require')

@@ -31,11 +31,11 @@ class MyUserManager(DefaultUserManager):
 
 
 class MyUser(AbstractUser):
-    def __init__(self, *args, **kwargs):
-        super(MyUser, self).__init__(*args, **kwargs)
-        self.username = models.CharField(
-            max_length=300,
-        )
+    # def __init__(self, *args, **kwargs):
+    #     super(MyUser, self).__init__(*args, **kwargs)
+    #     self.username = models.CharField(
+    #         max_length=300,
+    #     )
 
     my_photo = CustomImageField(
         upload_to='user/%Y/%m/%d',
